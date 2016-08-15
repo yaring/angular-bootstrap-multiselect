@@ -27,7 +27,8 @@
                 showSearch: '=?',
                 searchFilter: '=?',
                 disabled: '=?ngDisabled',
-                defaultText: '@'
+                defaultText: '@',
+                ngChange: '&'
             },
             require: 'ngModel',
             templateUrl: 'multiselect.html',
@@ -127,15 +128,23 @@
                         return $scope.defaultText;
                     }
                 };
+                
+                function ngChange() {
+                  if(angular.isFunction($scope.ngChange))
+                    return $scope.ngChange;
+                  return function(){};
+                }
 
                 $scope.selectAll = function () {
                     $scope.selectedOptions = $scope.resolvedOptions;
                     $scope.unselectedOptions = [];
+                    ngChange();
                 };
 
                 $scope.unselectAll = function () {
                     $scope.selectedOptions = [];
                     $scope.unselectedOptions = $scope.resolvedOptions;
+                    ngChange();
                 };
 
                 $scope.toggleItem = function (item) {
@@ -152,6 +161,7 @@
                         $scope.unselectedOptions.splice(unselectedIndex, 1);
                         $scope.selectedOptions.push(item);
                     }
+                    ngChange();
                 };
 
                 $scope.getId = function (item) {
