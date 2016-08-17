@@ -28,7 +28,7 @@
                 searchFilter: '=?',
                 disabled: '=?ngDisabled',
                 defaultText: '@',
-                ngChange: '&'
+                onValueChange: '&'
             },
             require: 'ngModel',
             templateUrl: 'multiselect.html',
@@ -128,11 +128,11 @@
                         return $scope.defaultText;
                     }
                 };
-                
+
                 function ngChange() {
-                  if(angular.isFunction($scope.ngChange))
-                    return $scope.ngChange;
-                  return function(){};
+                    if(angular.isFunction($scope.onValueChange))
+                        return $scope.onValueChange();
+                    return function(){};
                 }
 
                 $scope.selectAll = function () {
